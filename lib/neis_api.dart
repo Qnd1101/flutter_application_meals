@@ -8,11 +8,18 @@ class NeisApi {
     String site =
         'https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=e1a480b780f644668802e379795ec58d&Type=json&ATPT_OFCDC_SC_CODE=B10&SD_SCHUL_CODE=7011149&MLSV_FROM_YMD=$fromDate&MLSV_TO_YMD=$toDate';
     var response = await http.get(Uri.parse(site));
+
     if (response.statusCode == 200) {
-      var meals = jsonDecode(response.body)['mealServiceDietInfo'][1]['row']
-          as List<dynamic>;
-      return meals;
+      // 접속 성공
+      try {
+        var meals = jsonDecode(response.body)['mealServiceDietInfo'][1]['row']
+            as List<dynamic>;
+        return meals;
+      } catch (e) {
+        return [];
+      }
     } else {
+      // 접속 실패
       return [];
     }
   }

@@ -44,16 +44,22 @@ class _MainPageState extends State<MainPage> {
     var meals = await neisApi.getMeal(fromDate: fromDate, toDate: toDate);
 
     setState(() {
-      mealList = ListView.separated(
-          itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(meals[index]['MLSV_YMD']),
-                subtitle: Text(meals[index]['DDISH_NM']
-                    .toString()
-                    .replaceAll('<br/>', '\n')));
-          },
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: meals.length);
+      if (meals.isEmpty) {
+        mealList = const Center(
+          child: Text('결과가 텅텅'),
+        );
+      } else {
+        mealList = ListView.separated(
+            itemBuilder: (context, index) {
+              return ListTile(
+                  title: Text(meals[index]['MLSV_YMD']),
+                  subtitle: Text(meals[index]['DDISH_NM']
+                      .toString()
+                      .replaceAll('<br/>', '\n')));
+            },
+            separatorBuilder: (context, index) => const Divider(),
+            itemCount: meals.length);
+      }
     });
   }
 
