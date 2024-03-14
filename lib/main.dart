@@ -16,6 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MainPage(),
     );
   }
@@ -31,7 +32,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  dynamic mealList = const Text('검색하셈');
+  dynamic mealList = const Text(
+    '급식 정보를 알고 싶으시다면 \n 날짜를 선택해주세요!',
+    style: TextStyle(fontSize: 30),
+  );
 
   showCal() async {
     var dt = await showDateRangePicker(
@@ -66,8 +70,16 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [const Text('20230523'), Expanded(child: mealList)],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Image.asset(
+              'images/smile.png',
+              height: 250,
+            ),
+            Expanded(child: mealList)
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: showCal,
